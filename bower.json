@@ -1,0 +1,17 @@
+{
+  "name": "fimento",
+  "version": "1.0.0",
+  "authors": [
+    "Prokashev Vadim"
+  ],
+  "description": "",
+  "license": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ],
+  "dependencies": {
+
+  }
+}

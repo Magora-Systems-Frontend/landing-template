@@ -1,0 +1,44 @@
+{
+  "public": "./results",
+  "isProduction": false,
+  "stylus": {
+    "main": "./develop/styl/main.styl",
+    "src": [
+      "./develop/styl/**/*.styl"
+    ],
+    "dst": "css/main.css"
+  },
+  "layout": {
+    "src": [
+      "./develop/landings/example/example.jade"
+    ],
+    "dst": "/html"
+  },
+  "fonts": {
+    "src": [
+      "./develop/fonts/**/*.*"
+    ],
+    "dst": "/fonts"
+  },
+  "img": {
+    "src": [
+      "./develop/landings/example/img/*.*"
+    ],
+    "dst": "/images"
+  },
+  "build": [
+    "stylus",
+    "layout",
+    "img",
+    "fonts"
+  ],
+  "webServer": {
+    "server": {
+      "livereload": true,
+      "host": "localhost",
+      "port": 8085,
+      "open": false,
+      "fallback": "example.html"
+    }
+  }
+}
