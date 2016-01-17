@@ -1,7 +1,7 @@
 module.exports = function(gulp, options, config, wrapPipe) {
     var stylus = require('gulp-stylus'),
         gIf = require('gulp-if'),
-        minify = require('gulp-minify-css'),
+        cssnano = require('gulp-cssnano'),
         autoprefixer = require('gulp-autoprefixer'),
         concat = require('gulp-concat');
 
@@ -25,7 +25,7 @@ module.exports = function(gulp, options, config, wrapPipe) {
                 cascade: true
             }))
 
-            .pipe(gIf(config.isProduction, minify()))
+            .pipe(gIf(config.isProduction, cssnano()))
             .on('error', error)
 
             .pipe(concat(options['dst']))

@@ -45,7 +45,7 @@ function wrapPipe(taskFn) {
             done();
         };
         var onError = function(err) {
-            console.log(bug);
+            if(bug) console.log(bug);
             console.log(error.toString());
             done(err);
         };
@@ -75,7 +75,7 @@ if(config.watch === true){
 gulp.task('default', ['build'], function () {
     gulp.start('watch');
     gulp.start('webServer');
-    console.log(logo);
+    if(logo) console.log(logo);
 });
 
 
