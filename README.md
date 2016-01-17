@@ -2,7 +2,7 @@
 
 ### Installation
 
-    $ git clone https://github.com/Magora-Systems-Frontend/landing-template cd landing-template
+    $ git clone https://github.com/Magora-Systems-Frontend/landing-template && cd landing-template
     
 install gulp and bower globally
 
@@ -17,7 +17,3 @@ install requirement packages locally
     $ gulp
     
 see: http://localhost:8085
-
-### Resources
-
-https://jenius.github.io/rupture/
