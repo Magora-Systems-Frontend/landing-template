@@ -1,44 +1,52 @@
 {
   "public": "./results",
   "isProduction": false,
-  "stylus": {
-    "main": "./develop/styl/main.styl",
-    "src": [
-      "./develop/styl/**/*.styl"
+  "watch": true,
+  "tasks": {
+    "stylus": {
+      "src": [
+        "./develop/**/*.styl"
+      ],
+      "main":["./develop/styl/main.styl"],
+      "dst": "css/main.css",
+      "options": []
+    },
+    "jade": {
+      "src": ["./develop/landings/**/*.jade"],
+      "pages": [
+        "./develop/landings/example/example.jade"
+      ],
+      "dst": "/html",
+      "options": []
+    },
+    "copy": {
+      "fonts": {
+        "src": [
+          "./develop/fonts/**/*.*"
+        ],
+        "dst": "./results/fonts/"
+      }
+    },
+    "img": {
+      "src": [
+        "./develop/landings/example/img/*.*"
+      ],
+      "dst": "/images",
+      "options": []
+    },
+    "build": [
+      "stylus",
+      "jade",
+      "copy"
     ],
-    "dst": "css/main.css"
-  },
-  "layout": {
-    "src": [
-      "./develop/landings/example/example.jade"
-    ],
-    "dst": "/html"
-  },
-  "fonts": {
-    "src": [
-      "./develop/fonts/**/*.*"
-    ],
-    "dst": "/fonts"
-  },
-  "img": {
-    "src": [
-      "./develop/landings/example/img/*.*"
-    ],
-    "dst": "/images"
-  },
-  "build": [
-    "stylus",
-    "layout",
-    "img",
-    "fonts"
-  ],
-  "webServer": {
-    "server": {
-      "livereload": true,
-      "host": "localhost",
-      "port": 8085,
-      "open": false,
-      "fallback": "example.html"
+    "webServer": {
+      "server": {
+        "livereload": true,
+        "host": "localhost",
+        "port": 8085,
+        "open": false,
+        "fallback": "example.html"
+      }
     }
   }
 }

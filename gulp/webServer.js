@@ -1,6 +1,9 @@
-var webServer = require('gulp-webserver');
+module.exports = function(gulp, options, config, wrapPipe) {
 
-gulp.task('webServer', function () {
-    gulp.src(config['public'])
-        .pipe(webServer(config['webServer']['server']));
-});
+    var webServer = require('gulp-webserver');
+
+    return gulp.task('webServer', wrapPipe(function (success, error) {
+        gulp.src(config['public'])
+            .pipe(webServer(options['server']));
+    }));
+};

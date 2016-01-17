@@ -1,0 +1,31 @@
+b-content(is-offset=false, $item-margin-w=0)
+  name = '__inline';
+
+  if(is-offset)
+    name = '__inline_%s' % $item-margin-w
+
+  .b-content {
+    &{name} {
+      font-size 0
+      line-height 0
+      margin-left: '%spx' % -($item-margin-w * 2)
+      margin-right: '%spx' % -($item-margin-w * 2)
+      width: is-offset ? "calc(100% + %spx * 2)" % $item-margin-w : 100%
+      & > * {
+        display inline-block
+        box-sizing border-box
+        padding-left '%spx' % $item-margin-w
+        padding-right '%spx' % $item-margin-w
+      }
+    }
+
+    &_mw1200 {
+      max-width 1200px
+      margin 0 auto
+    }
+
+    &_mw900 {
+      max-width 900px
+      margin 0 auto
+    }
+  }

@@ -1,27 +1,21 @@
-var gIf = require('gulp-if'),
-    jshint = require('gulp-jshint'),
-    uglify = require('gulp-uglify'),
-    stylish = require('jshint-stylish'),
-    concat = require('gulp-concat'),
-    ngAnnotate = require('gulp-ng-annotate'),
-  replace = require('gulp-replace');
+module.exports = function(gulp, options, config, wrapPipe) {
+    var gIf = require('gulp-if'),
+        uglify = require('gulp-uglify'),
+        concat = require('gulp-concat'),
+        jshint = require('gulp-jshint');
 
-gulp.task('javascript', function () {
+    return gulp.task('javascript', wrapPipe(function (success, error) {
 
-    return gulp.src(config['javascript']['src'])
+        return gulp.src(options['src'])
+            .pipe(jshint())
+            .pipe(jshint.reporter('fail'))
 
-       // .pipe(jshint())
-       // .pipe(jshint.reporter(stylish))
-        .pipe(ngAnnotate())
+            .pipe(concat(options['dst']))
+            .on('error', errors)
 
-        .pipe(concat(config['javascript']['dst']))
-        .on('error', onErrors)
+            .pipe(gIf(config.isProduction, uglify()))
+            .on('error', errors)
 
-
-        .pipe(replace('{{SERVER}}', options.server))
-        .pipe(replace('{{PROTOCOL}}', options.protocol))
-        .pipe(gIf(config.isProduction, uglify()))
-        .on('error', onErrors)
-
-        .pipe(gulp.dest(config['public']));
-});
+            .pipe(gulp.dest(config['public']));
+    }));
+};

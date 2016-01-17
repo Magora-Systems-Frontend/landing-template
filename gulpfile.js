@@ -1,38 +1,81 @@
-gulp = require('gulp');
-dir = require('require-dir');
+var fs = require('fs');
+try {
+    var logo = fs.readFileSync('./logo', 'utf8');
+    var bug = fs.readFileSync('./bug', 'utf8');
+}
+catch(e){
+    logo = '';
+    bug = '';
+}
 
-//
-
-var knownOptions = {
+var defaultOptions = {
         default: {
-            env: 'dev',
-            config: 'application',
-            protocol: 'http://',
-            server: 'localhost:8090'
+            env: 'develop',
+            config: './config.json',
+            server: 'localhost:8085'
         }
-    },
-    minimist = require('minimist');
+    };
 
+//console parameters
+var minimist = require('minimist');
+var options = minimist(process.argv.slice(2), defaultOptions);
 
-options = minimist(process.argv.slice(2), knownOptions);
 
 console.info('API HOST: ' + options.server);
-config = require('./' + options.config + '/config.json');
 
-if (options['env'] === 'production') {
-    config.isProduction = true;
-    console.log('Production build')
+
+var config = require(options.config);
+
+switch (options['env']){
+    case 'production': {
+        config.isProduction = true;
+        console.log('Production build');
+        break;
+    }
+    case 'develop': {
+        config.isProduction = false;
+        console.log('Develop build');
+        break;
+    }
 }
-modules = {};
 
-onErrors = function (error) {
-    console.log(error.toString());
-};
+function wrapPipe(taskFn) {
+    return function(done) {
+        var onSuccess = function() {
+            done();
+        };
+        var onError = function(err) {
+            console.log(bug);
+            console.log(error.toString());
+            done(err);
+        };
+        var outStream = taskFn(onSuccess, onError);
+        if(outStream && typeof outStream.on === 'function') {
+            outStream.on('end', onSuccess);
+        }
+    }
+}
 
-dir('./gulp');
+var gulp = require('gulp');
+var tasks = {};
+var taskNames = Object.keys(config.tasks);
+var taskFolder = './gulp';
+for (var task_i=0; task_i < taskNames.length; task_i++){
+    var _taskName = taskNames[task_i];
+    tasks[_taskName] = require(taskFolder + '/' + _taskName + '.js');
+    var parameters = config.tasks[_taskName];
+    tasks[_taskName](gulp, parameters, config, wrapPipe);
+}
+
+if(config.watch === true){
+    require(taskFolder + '/watch.js')(gulp, config.tasks)
+}
+
 
 gulp.task('default', ['build'], function () {
     gulp.start('watch');
     gulp.start('webServer');
+    console.log(logo);
 });
+
 
