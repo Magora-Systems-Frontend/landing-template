@@ -9,7 +9,9 @@ module.exports = function(gulp, options, config, wrapPipe) {
 
         return gulp.src(options['main'])
 
-            .pipe(stylus())
+            .pipe(stylus({
+                'include css': true
+            }))
             .on('error', error)
 
             .pipe(autoprefixer({
