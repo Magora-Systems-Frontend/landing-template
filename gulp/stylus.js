@@ -3,11 +3,16 @@ module.exports = function(gulp, options, config, wrapPipe) {
         gIf = require('gulp-if'),
         cssnano = require('gulp-cssnano'),
         autoprefixer = require('gulp-autoprefixer'),
-        concat = require('gulp-concat');
+        concat = require('gulp-concat'),
+        sourcemaps = require('gulp-sourcemaps');
 
     return gulp.task('stylus', wrapPipe(function (success, error) {
 
         return gulp.src(options['main'])
+
+            .pipe(gIf(!config.isProduction, sourcemaps.init({
+                loadMaps: true
+            })))
 
             .pipe(stylus({
                 'include css': true
@@ -29,6 +34,11 @@ module.exports = function(gulp, options, config, wrapPipe) {
 
             .pipe(gIf(config.isProduction, cssnano()))
             .on('error', error)
+
+            .pipe(gIf(!config.isProduction, sourcemaps.write({
+                includeContent: true,
+                sourceRoot: options.options["mapSourceRoot"]
+            })))
 
             .pipe(concat(options['dst']))
             .on('error', error)

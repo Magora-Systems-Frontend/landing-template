@@ -9,22 +9,24 @@
       ],
       "main":["./develop/styl/main.styl"],
       "dst": "css/main.css",
-      "options": []
+      "options": {
+        "mapSourceRoot": "./develop/styl"
+      }
     },
     "jade": {
       "src": ["./develop/landings/**/*.jade"],
       "pages": [
         "./develop/landings/example/example.jade"
       ],
-      "dst": "/html",
-      "options": []
+      "dst": "",
+      "options": {}
     },
     "copy": {
       "fonts": {
         "src": [
           "./develop/fonts/**/*.*"
         ],
-        "dst": "./results/fonts/"
+        "dst": "results/assets/fonts/"
       }
     },
     "img": {
@@ -32,11 +34,30 @@
         "./develop/landings/example/img/*.*"
       ],
       "dst": "/images",
-      "options": []
+      "options": {}
+    },
+    "javascript":{
+      "src": [
+        "./develop/js/**/*.js"
+      ],
+      "dst": "js/common.js"
+    },
+    "clean": {
+      "src": [
+        "./results/"
+      ]
     },
     "build": [
       "stylus",
       "jade",
+      "javascript",
+      "copy"
+    ],
+    "rebuild":[
+      "clean",
+      "stylus",
+      "jade",
+      "javascript",
       "copy"
     ],
     "webServer": {

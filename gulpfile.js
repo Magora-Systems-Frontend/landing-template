@@ -9,12 +9,12 @@ catch(e){
 }
 
 var defaultOptions = {
-        default: {
-            env: 'develop',
-            config: './config.json',
-            server: 'localhost:8085'
-        }
-    };
+    default: {
+        env: 'develop',
+        config: './config.json',
+        server: 'localhost:8085'
+    }
+};
 
 //console parameters
 var minimist = require('minimist');
@@ -42,11 +42,11 @@ switch (options['env']){
 function wrapPipe(taskFn) {
     return function(done) {
         var onSuccess = function() {
-            done();
+            return done();
         };
         var onError = function(err) {
             if(bug) console.log(bug);
-            console.log(error.toString());
+            console.log(err.toString());
             done(err);
         };
         var outStream = taskFn(onSuccess, onError);

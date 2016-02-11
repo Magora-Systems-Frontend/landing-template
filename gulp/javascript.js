@@ -1,7 +1,8 @@
 module.exports = function(gulp, options, config, wrapPipe) {
     var gIf = require('gulp-if'),
         uglify = require('gulp-uglify'),
-        concat = require('gulp-concat')
+        concat = require('gulp-concat'),
+        jshint = require('gulp-jshint');
 
     return gulp.task('javascript', wrapPipe(function (success, error) {
 
